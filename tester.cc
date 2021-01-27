@@ -10,14 +10,16 @@
 #include <vector>
 #include <cstdlib>
 
-void usage() {
+void usage() 
+{
     std::cout << "Usage: ./test player1 player2 player3 player4 n flag" << std::endl;
     std::cout << "Flag: r to play with random seeds, f to play with 1 to the n seeds" << std::endl;
     std::cout << "Default input file: default.cnf" << std::endl;
     std::cout << "Default output file: default.res" << std::endl;
 }
 
-int main(int argv, char* argc[]) {
+int main(int argv, char* argc[]) 
+{
     if(argv != 7) {
         usage();
         exit(1);
@@ -53,13 +55,13 @@ int main(int argv, char* argc[]) {
             //Close stantard input
             close(0);
             //default.cnf becomes the stantard input
-            int fd=open("default.cnf",O_RDONLY);
+            int fd=open("src/default.cnf",O_RDONLY);
             if(fd==-1) {
                 std::cout << "Unable to open default.cnf configuration file" << std::endl;
                 exit(1);
             }
             //Open default.res
-            fd=open("default.res",O_WRONLY);
+            fd=open("src/default.res",O_WRONLY);
             if(fd==-1) {
                 std::cout << "Unable to open default.res output file" << std::endl;
                 exit(1);
@@ -73,7 +75,9 @@ int main(int argv, char* argc[]) {
             char randChar[4];
             sprintf(randChar,"%d",seed);
             //Execute the Game
-            execlp("./Game", "Game", "-s", randChar, players[i%4], players[(i+1)%4], players[(i+2)%4], players[(i+3)%4], NULL);
+            if(execlp("./src/Game", "Game", "-s", randChar, players[i%4], players[(i+1)%4], players[(i+2)%4], players[(i+3)%4], NULL)<0) {
+                exit(1);
+            }
         }
         //Parent waits
         else {
@@ -100,7 +104,11 @@ int main(int argv, char* argc[]) {
             int days, rxday;
             std::ifstream file;
             std::string aux, finalRound;
-            file.open("default.res");
+            file.open("src/default.res");
+            if(not file.is_open()) {
+                std::cout << "Unable to open default.res output file" << std::endl;
+                exit(1);
+            }
             while(file >> aux and aux != "NUM_DAYS");
             file >> days;
             while(file >> aux and aux != "NUM_ROUNDS_PER_DAY");
