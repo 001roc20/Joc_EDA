@@ -1,2 +1,1 @@
-# Joc EDA
-Joc EDA Q1 2020-2021
+# Joc Tardor 2020
