@@ -13,12 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: cd
-      run: cd src
     - name: compile game
-      run: make -j8
-    - name: cd 
-      run: cd ..
+      run: cd src && make -j8 && cd ..
     - name: compile tester
       run: g++ tester.cc -o tester
     - name: run 
