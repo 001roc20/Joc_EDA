@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: cd
+      run: cd src
+    - name: compile game
+      run: make -j8
+    - name: cd 
+      run: cd ..
+    - name: compile tester
+      run: g++ tester.cc -o tester
+    . name: run 
+      run: ./tester Dummy Dummy Dummy HomelanderV6 10 r
