@@ -1,1 +1,1 @@
-# Joc Tardor 2020
+# Joc Tardor 2020 Estructures de Dades i Algorismes
